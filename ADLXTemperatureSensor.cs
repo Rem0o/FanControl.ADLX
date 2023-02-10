@@ -8,14 +8,13 @@ namespace FanControl.ADLX
     {
         private readonly Func<double> _getTemp;
 
-        public ADLXTemperatureSensor(string name, GPU gpu, Func<Double> getTemp)
+        public ADLXTemperatureSensor(string name, GPU gpu, Func<double> getTemp)
         {
-
             Name = gpu.Name;
             Id = $"ADLX/Temperature/{gpu.Name}/{name}"; // PUT SOME KIND OF UNIQUE ID
+            _getTemp = getTemp;
 
             Update();
-            _getTemp = getTemp;
         }
 
         public string Id { get; }
