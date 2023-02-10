@@ -8,7 +8,7 @@ namespace FanControl.ADLX
     {
         private readonly ManualFanTuning _fanTuning;
 
-        public ADLXControl( GPU gpu, ManualFanTuning fanTuning )
+        public ADLXControl(GPU gpu, ManualFanTuning fanTuning)
         {
             Name = gpu.Name;
             Id = $"ADLX/Control/{gpu.Name}"; // PUT SOME KIND OF UNIQUE ID
@@ -24,9 +24,9 @@ namespace FanControl.ADLX
             // TODO
         }
 
-        public void Set( float val )
+        public void Set(float val)
         {
-            _fanTuning.SetFanSpeed( (int) Math.Round( val ) );
+            _fanTuning.SetFanSpeed((int)Math.Round(val));
             Value = val;
         }
 

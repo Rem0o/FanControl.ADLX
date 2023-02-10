@@ -8,7 +8,7 @@ namespace FanControl.ADLX
     {
         private readonly Func<double> _getTemp;
 
-        public ADLXTemperatureSensor( string name, GPU gpu, Func<Double> getTemp )
+        public ADLXTemperatureSensor(string name, GPU gpu, Func<Double> getTemp)
         {
 
             Name = gpu.Name;
@@ -24,7 +24,7 @@ namespace FanControl.ADLX
 
         public void Update()
         {
-            Value = (float) _getTemp();
+            Value = (float)_getTemp();
         }
     }
 }

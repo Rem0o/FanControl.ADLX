@@ -7,7 +7,7 @@ namespace FanControl.ADLX
     {
         private GPUMetrics _metrics;
 
-        public ADLXFanSensor( GPU gpu, GPUMetrics metrics )
+        public ADLXFanSensor(GPU gpu, GPUMetrics metrics)
         {
             _metrics = metrics;
 
