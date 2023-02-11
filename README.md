@@ -6,7 +6,7 @@ Plugin for [FanControl](https://github.com/Rem0o/FanControl.Releases) (V113 and 
 
 ## To install
 
-* Download the latest binaries from [AppVeyor](https://ci.appveyor.com/project/Rem0o/fancontrol-adlx/branch/master/artifacts)
+* Download the latest binaries from [AppVeyor](https://ci.appveyor.com/project/Rem0o/fancontrol-adlx/build/artifacts)
 * Compile the solution.
 
 And then
