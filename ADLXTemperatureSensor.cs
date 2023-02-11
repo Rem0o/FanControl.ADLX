@@ -10,7 +10,7 @@ namespace FanControl.ADLX
 
         public ADLXTemperatureSensor(string name, GPU gpu, Func<double> getTemp)
         {
-            Name = gpu.Name;
+            Name = $"{name}-{gpu.Name}";
             Id = $"ADLX/Temperature/{gpu.Name}/{name}"; // PUT SOME KIND OF UNIQUE ID
             _getTemp = getTemp;
 

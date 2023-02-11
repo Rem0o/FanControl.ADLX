@@ -7,12 +7,16 @@ namespace FanControl.ADLX
     public class ADLXControl : IPluginControlSensor
     {
         private readonly ManualFanTuning _fanTuning;
+        private readonly bool _initialZeroRPM = false;
 
         public ADLXControl(GPU gpu, ManualFanTuning fanTuning)
         {
             Name = gpu.Name;
             Id = $"ADLX/Control/{gpu.Name}"; // PUT SOME KIND OF UNIQUE ID
             _fanTuning = fanTuning;
+
+            _initialZeroRPM = _fanTuning.GetZeroRPMState();
+            _fanTuning.SetZeroRPM(true);
         }
 
         public string Id { get; }
@@ -21,6 +25,7 @@ namespace FanControl.ADLX
 
         public void Reset()
         {
+            _fanTuning.SetZeroRPM(_initialZeroRPM);
             // TODO
         }
 
@@ -32,6 +37,7 @@ namespace FanControl.ADLX
 
         public void Update()
         {
+            
             // nothing to update
         }
     }
