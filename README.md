@@ -17,4 +17,5 @@ And then
 ## Notes
 
 * This is an experimental plugin. Their may be bugs. Use at your own risk. PR are welcomed.
+* Wrapper from https://github.com/Rem0o/ADLX
 
