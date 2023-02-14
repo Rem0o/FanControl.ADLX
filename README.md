@@ -2,7 +2,9 @@
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat&logo=paypal)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=N4JPSTUQHRJM8&currency_code=USD&source=url&item_name=Fan+Control)
 
-Plugin for [FanControl](https://github.com/Rem0o/FanControl.Releases) (V113 and up) that provides support for ADLX (AMD gpus)
+Plugin for [FanControl](https://github.com/Rem0o/FanControl.Releases) (V113 and up) that provides support for ADLX (AMD gpus).
+<br/><br/>
+https://gpuopen.com/adl/
 
 ## To install
 
@@ -16,6 +18,7 @@ And then
 
 ## Notes
 
+* AMD Software: Adrenalin Edition 22.7.1 driver or > required.
 * This is an experimental plugin. Their may be bugs. Use at your own risk. PR are welcomed.
 * Wrapper from https://github.com/Rem0o/ADLX
 
