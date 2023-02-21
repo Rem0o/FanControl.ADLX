@@ -5,11 +5,13 @@ namespace FanControl.ADLX
 {
     public class ADLXFanSensor : IPluginSensor
     {
-        private GPUMetrics _metrics;
+        private PerformanceMonitor _perf;
+        private GPU _gpu;
 
-        public ADLXFanSensor(GPU gpu, GPUMetrics metrics)
+        public ADLXFanSensor(GPU gpu, PerformanceMonitor perf)
         {
-            _metrics = metrics;
+            _perf = perf;
+            _gpu = gpu;
 
             Name = gpu.Name;
             Id = $"ADLX/Fan/{gpu.Name}"; // PUT SOME KIND OF UNIQUE ID
@@ -23,7 +25,8 @@ namespace FanControl.ADLX
 
         public void Update()
         {
-            Value = _metrics.GetFanSpeed();
+            var metrics = _perf.GetGPUMetrics(_gpu);
+            Value = metrics.GetFanSpeed();
         }
     }
 }

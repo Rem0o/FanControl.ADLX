@@ -89,7 +89,7 @@ namespace FanControl.ADLX
             }
 
             ADLXControl[] controls = _gpus.Zip(_fans, (gpu, fan) => new ADLXControl(gpu, fan)).ToArray();
-            ADLXFanSensor[] fanSensors = _gpus.Zip(_metrics, (gpu, m) => new ADLXFanSensor(gpu, m)).ToArray();
+            ADLXFanSensor[] fanSensors = _gpus.Select((gpu) => new ADLXFanSensor(gpu, _perf)).ToArray();
             ADLXTemperatureSensor[] hotspots = _gpus.Zip(_metrics, (gpu, m) => new ADLXTemperatureSensor("Hotspot", gpu, m.GetHotspotTemperature)).ToArray();
             ADLXTemperatureSensor[] gpuTemps = _gpus.Zip(_metrics, (gpu, m) => new ADLXTemperatureSensor("GPU", gpu, m.GetGPUTemperature)).ToArray();
 
