@@ -25,8 +25,10 @@ namespace FanControl.ADLX
 
         public void Update()
         {
-            var metrics = _perf.GetGPUMetrics(_gpu);
-            Value = metrics.GetFanSpeed();
+            using (var metrics = _perf.GetGPUMetrics(_gpu))
+            {
+                Value = metrics.GetFanSpeed();
+            }
         }
     }
 }
