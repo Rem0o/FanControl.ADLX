@@ -13,6 +13,8 @@ namespace FanControl.ADLX
         {
             _performanceMonitor = performanceMonitor;
             _gpu = gpu;
+
+            UpdateMetrics();
         }
 
         public void UpdateMetrics()
