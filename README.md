@@ -4,7 +4,7 @@
 
 Plugin for [FanControl](https://github.com/Rem0o/FanControl.Releases) (V113 and up) that provides support for ADLX (AMD gpus).
 <br/><br/>
-https://gpuopen.com/adl/
+https://gpuopen.com/adlx/
 
 ## To install
 
