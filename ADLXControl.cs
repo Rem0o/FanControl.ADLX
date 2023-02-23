@@ -40,9 +40,10 @@ namespace FanControl.ADLX
             else if (_zeroRPMSet)
             {
                 _fanTuning.SetZeroRPM(false);
+                _zeroRPMSet = false;
             }
 
-            if (_fanTuning.SpeedRange.Min > val)
+            if (_fanTuning.SpeedRange.Min > val && val != 0)
             {
                 val = _fanTuning.SpeedRange.Min;
             }
