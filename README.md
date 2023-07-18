@@ -6,6 +6,11 @@ Plugin for [FanControl](https://github.com/Rem0o/FanControl.Releases) (V113 and 
 <br/><br/>
 https://gpuopen.com/adlx/
 
+## Bindings
+
+I did my best to make functional bindings in this fork following the other examples/bindings : https://github.com/Rem0o/ADLX<br/>
+Documentation is vague, so there may be problems/bugs in there in the first place.
+
 ## To install
 
 * Download the latest binaries from [AppVeyor](https://ci.appveyor.com/project/Rem0o/fancontrol-adlx/build/artifacts)
@@ -19,6 +24,6 @@ And then
 ## Notes
 
 * AMD Software: Adrenalin Edition 22.7.1 driver or > required.
-* This is an experimental plugin. Their may be bugs. Use at your own risk. PR are welcomed.
+* _This is an experimental plugin_. Their WILL be bugs. Use at your own risk. PR are welcomed.
 * Wrapper from https://github.com/Rem0o/ADLX
 
