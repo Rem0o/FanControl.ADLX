@@ -8,7 +8,7 @@ namespace FanControl.ADLX
     {
         private readonly ManualFanTuning _fanTuning;
         private readonly bool _initialZeroRPM = false;
-        private bool _zeroRPMSet;
+        private bool _zeroRPMState;
 
         public ADLXControl(GPU gpu, ManualFanTuning fanTuning)
         {
@@ -17,16 +17,22 @@ namespace FanControl.ADLX
             _fanTuning = fanTuning;
 
             _initialZeroRPM = _fanTuning.GetZeroRPMState();
-            _zeroRPMSet = _initialZeroRPM;
+            _zeroRPMState = _initialZeroRPM;
         }
 
         public string Id { get; }
         public string Name { get; }
         public float? Value { get; private set; } = null;
 
+        private void SetZeroRPM(bool val)
+        {
+            _fanTuning.SetZeroRPM(val);
+            _zeroRPMState = val;
+        }
+
         public void Reset()
         {
-            _fanTuning.SetZeroRPM(_initialZeroRPM);
+            this.SetZeroRPM(_initialZeroRPM);
             // TODO
         }
 
@@ -34,18 +40,19 @@ namespace FanControl.ADLX
         {
             if (val == 0)
             {
-                _zeroRPMSet = true;
-                _fanTuning.SetZeroRPM(true);
+                this.SetZeroRPM(true);
             }
-            else if (_zeroRPMSet)
+            else
             {
-                _fanTuning.SetZeroRPM(false);
-                _zeroRPMSet = false;
-            }
+                if (_zeroRPMState)
+                {
+                    this.SetZeroRPM(false);
+                }
 
-            if (_fanTuning.SpeedRange.Min > val && val != 0)
-            {
-                val = _fanTuning.SpeedRange.Min;
+                if (_fanTuning.SpeedRange.Min > val)
+                {
+                    val = _fanTuning.SpeedRange.Min;
+                }
             }
 
             _fanTuning.SetFanSpeed((int)Math.Round(val));
