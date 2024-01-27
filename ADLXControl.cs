@@ -27,13 +27,13 @@ namespace FanControl.ADLX
         public string Name { get; }
         public float? Value { get; private set; } = null;
 
-        private void SetZeroRPM(bool val)
+        private void SetZeroRPM(bool enabled)
         {
             if (!_fanTuning.SupportsZeroRPM)
                 return;
 
-            _fanTuning.SetZeroRPM(val);
-            _zeroRPMState = val;
+            _fanTuning.SetZeroRPM(enabled);
+            _zeroRPMState = enabled;
         }
 
         public void Reset()
