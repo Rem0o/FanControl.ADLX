@@ -109,10 +109,13 @@ namespace FanControl.ADLX
 
         public void Update()
         {
-            if (!_initialized) return;
+            lock (this)
+            {
+                if (!_initialized) return;
 
-            foreach (var provider in _metricsProviders)
-                provider.UpdateMetrics();
+                foreach (var provider in _metricsProviders)
+                    provider.UpdateMetrics();
+            }
         }
     }
 }

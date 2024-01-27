@@ -13,7 +13,7 @@ namespace FanControl.ADLX
         public ADLXControl(GPU gpu, ManualFanTuning fanTuning)
         {
             Name = gpu.Name;
-            Id = $"ADLX/Control/{gpu.Name}"; // PUT SOME KIND OF UNIQUE ID
+            Id = $"ADLX/{gpu.Name}/{gpu.UniqueId}/Control";
             _fanTuning = fanTuning;
 
             _initialZeroRPM = _fanTuning.GetZeroRPMState();

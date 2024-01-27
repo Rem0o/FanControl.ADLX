@@ -12,7 +12,7 @@ namespace FanControl.ADLX
             _metrics = metricsProvider;
 
             Name = gpu.Name;
-            Id = $"ADLX/Fan/{gpu.Name}"; // PUT SOME KIND OF UNIQUE ID
+            Id = $"ADLX/{gpu.Name}/{gpu.UniqueId}/fan";
 
             Update();
         }
