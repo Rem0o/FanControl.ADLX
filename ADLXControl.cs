@@ -16,8 +16,11 @@ namespace FanControl.ADLX
             Id = $"ADLX/{gpu.Name}/{gpu.UniqueId}/Control";
             _fanTuning = fanTuning;
 
-            _initialZeroRPM = _fanTuning.GetZeroRPMState();
-            _zeroRPMState = _initialZeroRPM;
+            if (fanTuning.SupportsZeroRPM)
+            {
+                _initialZeroRPM = _fanTuning.GetZeroRPMState();
+                _zeroRPMState = _initialZeroRPM;
+            }
         }
 
         public string Id { get; }
@@ -26,42 +29,42 @@ namespace FanControl.ADLX
 
         private void SetZeroRPM(bool val)
         {
+            if (!_fanTuning.SupportsZeroRPM)
+                return;
+
             _fanTuning.SetZeroRPM(val);
             _zeroRPMState = val;
         }
 
         public void Reset()
         {
-            this.SetZeroRPM(_initialZeroRPM);
-            // TODO
+            if (_fanTuning.SupportsZeroRPM)
+                SetZeroRPM(_initialZeroRPM);
+
+            // todo...
         }
 
         public void Set(float val)
         {
-            if (val == 0)
-            {
-                this.SetZeroRPM(true);
-            }
+            var roundedVal = (int)Math.Round(val);
+
+            if (roundedVal == 0)
+                SetZeroRPM(true);
             else
             {
                 if (_zeroRPMState)
-                {
-                    this.SetZeroRPM(false);
-                }
+                    SetZeroRPM(false);
 
-                if (_fanTuning.SpeedRange.Min > val)
-                {
-                    val = _fanTuning.SpeedRange.Min;
-                }
+                if (_fanTuning.SpeedRange.Min > roundedVal)
+                    roundedVal = _fanTuning.SpeedRange.Min;
             }
 
-            _fanTuning.SetFanSpeed((int)Math.Round(val));
-            Value = val;
+            _fanTuning.SetFanSpeed(roundedVal);
+            Value = roundedVal;
         }
 
         public void Update()
         {
-
             // nothing to update
         }
     }
