@@ -63,8 +63,9 @@ namespace FanControl.ADLX
 
                         if (!supported)
                         {
-                            _pluginLogger.Log($"Manual fan tuning for {g.Name} is not supported");
+                            Log($"Manual fan tuning for {g.Name} is not supported");
                         }
+
                         return supported;
                     }).Select(_tuning.GetManualFanTuning).ToArray();
 
@@ -74,7 +75,7 @@ namespace FanControl.ADLX
             }
             catch (Exception ex)
             {
-                _pluginLogger.Log(ex.ToString());
+                Log(ex.ToString());
                 Close();
             }
         }
@@ -84,6 +85,11 @@ namespace FanControl.ADLX
             if (!_initialized)
             {
                 return;
+            }
+
+            if (_fans.Any(x => !x.SupportsTargetFanSpeed))
+            {
+                Log($"ADLX Plugin: {nameof(ManualFanTuning.SupportsTargetFanSpeed)} returns false");
             }
 
             ADLXControl[] controls = _gpus.Zip(_fans, (gpu, fan) => new ADLXControl(gpu, fan)).ToArray();
@@ -116,6 +122,11 @@ namespace FanControl.ADLX
                 foreach (var provider in _metricsProviders)
                     provider.UpdateMetrics();
             }
+        }
+
+        private void Log(string message)
+        {
+            _pluginLogger.Log($"ADLX plugin: {message}");
         }
     }
 }
