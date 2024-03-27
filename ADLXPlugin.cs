@@ -62,9 +62,7 @@ namespace FanControl.ADLX
                         var supported = _tuning.IsManualFanTuningSupported(g);
 
                         if (!supported)
-                        {
                             Log($"Manual fan tuning for {g.Name} is not supported");
-                        }
 
                         return supported;
                     }).Select(_tuning.GetManualFanTuning).ToArray();
