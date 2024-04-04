@@ -24,6 +24,6 @@ And then
 ## Notes
 
 * AMD Software: Adrenalin Edition 22.7.1 driver or > required.
-* _This is an experimental plugin_. Their WILL be bugs. Use at your own risk. PR are welcomed.
+* _This is an experimental plugin_. There WILL be bugs. Use at your own risk. PR are welcomed.
 * Wrapper from https://github.com/Rem0o/ADLX
 
