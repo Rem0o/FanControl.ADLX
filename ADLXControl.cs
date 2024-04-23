@@ -26,7 +26,7 @@ namespace FanControl.ADLX
                 _zeroRPMState = _initialZeroRPM;
             }
 
-            if (fanTuning.SupportsTargetFanSpeed)
+            if (fanTuning.SupportsTargetFanSpeed && fanTuning.SpeedRange.Max > 0)
             {
                 _supportTargetFanSpeed = true;
             }
