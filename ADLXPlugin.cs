@@ -85,11 +85,6 @@ namespace FanControl.ADLX
                 return;
             }
 
-            if (_fans.Any(x => !x.SupportsTargetFanSpeed))
-            {
-                Log($"ADLX Plugin: {nameof(ManualFanTuning.SupportsTargetFanSpeed)} returns false");
-            }
-
             ADLXControl[] controls = _gpus.Zip(_fans, (gpu, fan) => new ADLXControl(gpu, fan)).ToArray();
             ADLXFanSensor[] fanSensors = _gpus.Zip(_metricsProviders, (gpu, m) => new ADLXFanSensor(gpu, m)).ToArray();
             ADLXTemperatureSensor[] hotspots = _gpus.Zip(_metricsProviders, (gpu, m) => new ADLXTemperatureSensor("Hotspot", gpu, () => m.Current.GetHotspotTemperature())).ToArray();
