@@ -41,6 +41,7 @@ namespace FanControl.ADLX
         public void Reset()
         {
             _fanTuning.Reset();
+            Value = null;
         }
 
         public void Set(float val)
