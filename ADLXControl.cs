@@ -7,9 +7,7 @@ namespace FanControl.ADLX
     public class ADLXControl : IPluginControlSensor
     {
         private readonly ManualFanTuning _fanTuning;
-        private readonly bool _initialZeroRPM = false;
         private bool _zeroRPMState;
-        private int[] _initalState;
         private bool _supportTargetFanSpeed;
 
         public ADLXControl(GPU gpu, ManualFanTuning fanTuning)
@@ -17,14 +15,6 @@ namespace FanControl.ADLX
             Name = gpu.Name;
             Id = $"ADLX/{gpu.Name}/{gpu.UniqueId}/Control";
             _fanTuning = fanTuning;
-
-            _initalState = _fanTuning.GetCurrentState();
-
-            if (fanTuning.SupportsZeroRPM)
-            {
-                _initialZeroRPM = _fanTuning.GetZeroRPMState();
-                _zeroRPMState = _initialZeroRPM;
-            }
 
             if (fanTuning.SupportsTargetFanSpeed && fanTuning.SpeedRange.Max > 0)
             {
@@ -50,10 +40,7 @@ namespace FanControl.ADLX
 
         public void Reset()
         {
-            if (_fanTuning.SupportsZeroRPM)
-                SetZeroRPM(_initialZeroRPM);
-
-            _fanTuning.SetFanTuningStates(_initalState);
+            _fanTuning.Reset();
         }
 
         public void Set(float val)
