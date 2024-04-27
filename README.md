@@ -6,10 +6,9 @@ Plugin for [FanControl](https://github.com/Rem0o/FanControl.Releases) (V113 and 
 <br/><br/>
 https://gpuopen.com/adlx/
 
-## Bindings
+## ADLX Bindings
 
 I did my best to make functional bindings in this fork following the other examples/bindings : https://github.com/Rem0o/ADLX<br/>
-Documentation is vague, so there may be problems/bugs in there in the first place.
 
 ## To install
 
@@ -24,6 +23,6 @@ And then
 ## Notes
 
 * AMD Software: Adrenalin Edition 22.7.1 driver or > required.
-* _This is an experimental plugin_. There WILL be bugs. Use at your own risk. PR are welcomed.
+* Caveat: This will put Adrenaline/AMD driver in Manual tuning "Custom" mode, you can't have both automatic tuning (OC) and manual tuning enabled at the same time. 
 * Wrapper from https://github.com/Rem0o/ADLX
 
