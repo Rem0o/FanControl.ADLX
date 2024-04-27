@@ -52,6 +52,9 @@ namespace FanControl.ADLX
             else
                 SetZeroRPM(false);
 
+            if (roundedVal == Value)
+                return;
+
             if (_supportTargetFanSpeed)
                 _fanTuning.SetTargetFanSpeed(GetRPM(val));
             else
