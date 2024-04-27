@@ -41,6 +41,9 @@ namespace FanControl.ADLX
             if (!_fanTuning.SupportsZeroRPM)
                 return;
 
+            if (enabled == _zeroRPMState)
+                return;
+
             _fanTuning.SetZeroRPM(enabled);
             _zeroRPMState = enabled;
         }
@@ -60,15 +63,12 @@ namespace FanControl.ADLX
             if (roundedVal == 0)
                 SetZeroRPM(true);
             else
-            {
-                if (_zeroRPMState)
-                    SetZeroRPM(false);
-            }
+                SetZeroRPM(false);
 
             if (_supportTargetFanSpeed)
                 _fanTuning.SetTargetFanSpeed(GetRPM(val));
             else
-                _fanTuning.SetFanTuningStates(roundedVal);
+                _fanTuning.SetFanTuningStates2(roundedVal);
 
             Value = roundedVal;
         }
