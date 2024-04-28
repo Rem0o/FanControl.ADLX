@@ -34,7 +34,6 @@ namespace FanControl.ADLX
             {
                 _initialized = false;
 
-                _metricsProviders.ToList().ForEach(x => x.Dispose());
                 _fans?.ToList().ForEach(x => x.Dispose());
                 _perf?.Dispose();
                 _tuning?.Dispose();
@@ -87,8 +86,8 @@ namespace FanControl.ADLX
 
             ADLXControl[] controls = _gpus.Zip(_fans, (gpu, fan) => new ADLXControl(gpu, fan)).ToArray();
             ADLXFanSensor[] fanSensors = _gpus.Zip(_metricsProviders, (gpu, m) => new ADLXFanSensor(gpu, m)).ToArray();
-            ADLXTemperatureSensor[] hotspots = _gpus.Zip(_metricsProviders, (gpu, m) => new ADLXTemperatureSensor("Hotspot", gpu, () => m.Current.GetHotspotTemperature())).ToArray();
-            ADLXTemperatureSensor[] gpuTemps = _gpus.Zip(_metricsProviders, (gpu, m) => new ADLXTemperatureSensor("GPU", gpu, () => m.Current.GetGPUTemperature())).ToArray();
+            ADLXTemperatureSensor[] hotspots = _gpus.Zip(_metricsProviders, (gpu, m) => new ADLXTemperatureSensor("Hotspot", gpu, () => m.Current.GPUHotspotTemperature)).ToArray();
+            ADLXTemperatureSensor[] gpuTemps = _gpus.Zip(_metricsProviders, (gpu, m) => new ADLXTemperatureSensor("GPU", gpu, () => m.Current.GPUTemperature)).ToArray();
 
             foreach (var control in controls)
             {

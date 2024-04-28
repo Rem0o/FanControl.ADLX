@@ -3,11 +3,11 @@ using System;
 
 namespace FanControl.ADLX
 {
-    public class GPUMetricsProvider : IDisposable
+    public class GPUMetricsProvider
     {
         private readonly PerformanceMonitor _performanceMonitor;
         private readonly GPU _gpu;
-        private GPUMetrics _metrics;
+        private GPUMetricsStruct _metrics;
 
         public GPUMetricsProvider(PerformanceMonitor performanceMonitor, GPU gpu)
         {
@@ -19,12 +19,10 @@ namespace FanControl.ADLX
 
         public void UpdateMetrics()
         {
-            _metrics?.Dispose();
-            _metrics = _performanceMonitor.GetGPUMetrics(_gpu);
+            _metrics = _performanceMonitor.GetGPUMetricsStruct(_gpu);
         }
 
-        public void Dispose() => _metrics?.Dispose();
 
-        public GPUMetrics Current => _metrics;
+        public GPUMetricsStruct Current => _metrics;
     }
 }

@@ -23,7 +23,7 @@ namespace FanControl.ADLX
 
         public void Update()
         {
-            Value = _metrics.Current.GetFanSpeed();
+            Value = _metrics.Current.GPUFanSpeed;
         }
     }
 }
