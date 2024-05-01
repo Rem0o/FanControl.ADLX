@@ -16,7 +16,7 @@ namespace FanControl.ADLX
         private GPUTuningService _tuning;
         private PerformanceMonitor _perf;
         private Dictionary<int, ManualFanTuning> _fans;
-
+        private IDisposable _tracking;
         private bool _initialized;
         private GPUMetricsProvider[] _metricsProviders;
 
@@ -33,7 +33,7 @@ namespace FanControl.ADLX
             lock (this)
             {
                 _initialized = false;
-
+                _tracking?.Dispose();
                 _fans?.Values.ToList().ForEach(x => x.Dispose());
                 _perf?.Dispose();
                 _tuning?.Dispose();
@@ -66,6 +66,7 @@ namespace FanControl.ADLX
                         return supported;
                     }).ToDictionary(x => x.UniqueId, x => _tuning.GetManualFanTuning(x));
 
+                    _tracking = _perf.StartTracking(1000, 50);
                     _metricsProviders = _gpus.Select(x => new GPUMetricsProvider(_perf, x)).ToArray();
                     _initialized = true;
                 }
@@ -85,7 +86,6 @@ namespace FanControl.ADLX
             }
 
             ADLXControl[] controls = _gpus.Where(x => _fans.ContainsKey(x.UniqueId)).Select(x => new ADLXControl(x, _fans[x.UniqueId])).ToArray();
-
             ADLXFanSensor[] fanSensors = _gpus.Zip(_metricsProviders, (gpu, m) => new ADLXFanSensor(gpu, m)).ToArray();
             ADLXTemperatureSensor[] hotspots = _gpus.Zip(_metricsProviders, (gpu, m) => new ADLXTemperatureSensor("Hotspot", gpu, () => m.Current.GPUHotspotTemperature)).ToArray();
             ADLXTemperatureSensor[] gpuTemps = _gpus.Zip(_metricsProviders, (gpu, m) => new ADLXTemperatureSensor("GPU", gpu, () => m.Current.GPUTemperature)).ToArray();

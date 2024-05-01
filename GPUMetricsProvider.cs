@@ -13,13 +13,12 @@ namespace FanControl.ADLX
         {
             _performanceMonitor = performanceMonitor;
             _gpu = gpu;
-
             UpdateMetrics();
         }
 
         public void UpdateMetrics()
         {
-            _metrics = _performanceMonitor.GetGPUMetricsStruct(_gpu);
+            _metrics = _performanceMonitor.GetGPUMetricsStructFromTracking(_gpu);
         }
 
 
