@@ -1,23 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <OutputType>Library</OutputType>
-  </PropertyGroup>
-  <ItemGroup>
-    <None Remove="Dlls\ADLXCSharpBind.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="ADLXWrapper">
-      <HintPath>Dlls\ADLXWrapper.dll</HintPath>
-    </Reference>
-    <Reference Include="FanControl.Plugins">
-      <HintPath>Dlls\FanControl.Plugins.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <ContentWithTargetPath Include="Dlls\ADLXCSharpBind.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <TargetPath>ADLXCSharpBind.dll</TargetPath>
-    </ContentWithTargetPath>
-  </ItemGroup>
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<OutputType>Library</OutputType>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)'=='Release'">
+		<DebugType>none</DebugType>
+		<Optimize>True</Optimize>
+	</PropertyGroup>
+	<ItemGroup>
+		<None Remove="Dlls\ADLXCSharpBind.dll" />
+	</ItemGroup>
+	<ItemGroup>
+		<Reference Include="ADLXWrapper">
+			<HintPath>Dlls\ADLXWrapper.dll</HintPath>
+		</Reference>
+		<Reference Include="FanControl.Plugins">
+			<HintPath>Dlls\FanControl.Plugins.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+	<ItemGroup>
+		<ContentWithTargetPath Include="Dlls\ADLXCSharpBind.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<TargetPath>ADLXCSharpBind.dll</TargetPath>
+		</ContentWithTargetPath>
+	</ItemGroup>
 </Project>
