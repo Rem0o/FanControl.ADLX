@@ -33,14 +33,12 @@ namespace FanControl.ADLX
         {
             lock (_lock)
             {
+                if (!_initialized)
+                    return;
+
+                DisposeAll();
+
                 _initialized = false;
-                _tracking?.Dispose();
-                _fans?.Values.ToList().ForEach(x => x.Dispose());
-                _perf?.Dispose();
-                _tuning?.Dispose();
-                _gpus?.ToList().ForEach(x => x.Dispose());
-                _system?.Dispose();
-                _wrapper?.Dispose();
             }
         }
 
@@ -75,7 +73,8 @@ namespace FanControl.ADLX
             catch (Exception ex)
             {
                 Log(ex.ToString());
-                Close();
+                DisposeAll();
+                _initialized = false;
             }
         }
 
@@ -124,6 +123,17 @@ namespace FanControl.ADLX
         private void Log(string message)
         {
             _pluginLogger.Log($"ADLX plugin: {message}");
+        }
+
+        private void DisposeAll()
+        {
+            _tracking?.Dispose();
+            _fans?.Values.ToList().ForEach(x => x.Dispose());
+            _perf?.Dispose();
+            _tuning?.Dispose();
+            _gpus?.ToList().ForEach(x => x.Dispose());
+            _system?.Dispose();
+            _wrapper?.Dispose();
         }
     }
 }
