@@ -2,7 +2,7 @@
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat&logo=paypal)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=N4JPSTUQHRJM8&currency_code=USD&source=url&item_name=Fan+Control)
 
-Plugin for [FanControl](https://github.com/Rem0o/FanControl.Releases) (V113 and up) that provides support for ADLX (AMD gpus).
+Plugin for [FanControl](https://github.com/Rem0o/FanControl.Releases) (V113 and up) that provides support for ADLX compatible gpus (AMD RX 5000/6000/7000).
 <br/><br/>
 https://gpuopen.com/adlx/
 
@@ -12,13 +12,14 @@ I did my best to make functional bindings in this fork following the other examp
 
 ## To install
 
-* Download the latest binaries from [AppVeyor](https://ci.appveyor.com/project/Rem0o/fancontrol-adlx/build/artifacts)
-* Compile the solution.
+* Download the latest [release](https://github.com/Rem0o/FanControl.ADLX/releases)
+* (or) Download the latest binaries from [AppVeyor](https://ci.appveyor.com/project/Rem0o/fancontrol-adlx/build/artifacts)
+* (or) Compile the solution.
 
 And then
 
-1. Copy the dlls into FanControl's "Plugins" folder with its . You might need to unblock them in their properties.
-3. Open FanControl and enjoy!
+* Use the "install plugin" button from the settings page, select the zip.
+* (or) place the (extracted) files in the "Plugins" folder.
 
 ## Notes
 
