@@ -55,15 +55,8 @@ namespace FanControl.ADLX
                     _tuning = _system.GetGPUTuningService();
                     _perf = _system.GetPerformanceMonitor();
 
-                    _fans = _gpus.Where(g =>
-                    {
-                        var supported = _tuning.IsManualFanTuningSupported(g);
-
-                        if (!supported)
-                            Log($"Manual fan tuning for {g.Name} is not supported");
-
-                        return supported;
-                    }).ToDictionary(x => x.UniqueId, x => _tuning.GetManualFanTuning(x));
+                    _fans = _gpus.Where(_tuning.IsManualFanTuningSupported)
+                        .ToDictionary(x => x.UniqueId, x => _tuning.GetManualFanTuning(x));
 
                     _tracking = _perf.StartTracking(1000, 50);
                     _metricsProviders = _gpus.Select(x => new GPUMetricsProvider(_perf, x)).ToArray();
