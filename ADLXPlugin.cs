@@ -8,7 +8,6 @@ namespace FanControl.ADLX
 {
     public class ADLXPlugin : IPlugin2
     {
-        private object _lock = new object();
         private readonly IPluginLogger _pluginLogger;
         private readonly IPluginDialog _pluginDialog;
         private ADLXWrapper.ADLXWrapper _wrapper;
@@ -31,37 +30,32 @@ namespace FanControl.ADLX
 
         public void Close()
         {
-            lock (_lock)
-            {
-                if (!_initialized)
-                    return;
+            if (!_initialized)
+                return;
 
-                DisposeAll();
+            DisposeAll();
 
-                _initialized = false;
-            }
+            _initialized = false;
         }
 
         public void Initialize()
         {
             try
             {
-                lock (_lock)
-                {
-                    _wrapper = new ADLXWrapper.ADLXWrapper();
-                    _system = _wrapper.GetSystemServices();
-                    _gpus = _system.GetGPUs();
 
-                    _tuning = _system.GetGPUTuningService();
-                    _perf = _system.GetPerformanceMonitor();
+                _wrapper = new ADLXWrapper.ADLXWrapper();
+                _system = _wrapper.GetSystemServices();
+                _gpus = _system.GetGPUs();
 
-                    _fans = _gpus.Where(_tuning.IsManualFanTuningSupported)
-                        .ToDictionary(x => x.UniqueId, x => _tuning.GetManualFanTuning(x));
+                _tuning = _system.GetGPUTuningService();
+                _perf = _system.GetPerformanceMonitor();
 
-                    _tracking = _perf.StartTracking(1000, 50);
-                    _metricsProviders = _gpus.Select(x => new GPUMetricsProvider(_perf, x)).ToArray();
-                    _initialized = true;
-                }
+                _fans = _gpus.Where(_tuning.IsManualFanTuningSupported)
+                    .ToDictionary(x => x.UniqueId, x => _tuning.GetManualFanTuning(x));
+
+                _tracking = _perf.StartTracking(1000, 50);
+                _metricsProviders = _gpus.Select(x => new GPUMetricsProvider(_perf, x)).ToArray();
+                _initialized = true;
             }
             catch (Exception ex)
             {
@@ -73,44 +67,38 @@ namespace FanControl.ADLX
 
         public void Load(IPluginSensorsContainer _container)
         {
-            lock (_lock)
+            if (!_initialized)
             {
-                if (!_initialized)
-                {
-                    return;
-                }
+                return;
+            }
 
-                ADLXControl[] controls = _gpus.Where(x => _fans.ContainsKey(x.UniqueId)).Select(x => new ADLXControl(x, _fans[x.UniqueId])).ToArray();
-                ADLXFanSensor[] fanSensors = _gpus.Zip(_metricsProviders, (gpu, m) => new ADLXFanSensor(gpu, m)).ToArray();
-                ADLXTemperatureSensor[] hotspots = _gpus.Zip(_metricsProviders, (gpu, m) => new ADLXTemperatureSensor("Hotspot", gpu, () => m.Current.GPUHotspotTemperature)).ToArray();
-                ADLXTemperatureSensor[] gpuTemps = _gpus.Zip(_metricsProviders, (gpu, m) => new ADLXTemperatureSensor("GPU", gpu, () => m.Current.GPUTemperature)).ToArray();
+            ADLXControl[] controls = _gpus.Where(x => _fans.ContainsKey(x.UniqueId)).Select(x => new ADLXControl(x, _fans[x.UniqueId])).ToArray();
+            ADLXFanSensor[] fanSensors = _gpus.Zip(_metricsProviders, (gpu, m) => new ADLXFanSensor(gpu, m)).ToArray();
+            ADLXTemperatureSensor[] hotspots = _gpus.Zip(_metricsProviders, (gpu, m) => new ADLXTemperatureSensor("Hotspot", gpu, () => m.Current.GPUHotspotTemperature)).ToArray();
+            ADLXTemperatureSensor[] gpuTemps = _gpus.Zip(_metricsProviders, (gpu, m) => new ADLXTemperatureSensor("GPU", gpu, () => m.Current.GPUTemperature)).ToArray();
 
-                foreach (var control in controls)
-                {
-                    _container.ControlSensors.Add(control);
-                }
+            foreach (var control in controls)
+            {
+                _container.ControlSensors.Add(control);
+            }
 
-                foreach (var fan in fanSensors)
-                {
-                    _container.FanSensors.Add(fan);
-                }
+            foreach (var fan in fanSensors)
+            {
+                _container.FanSensors.Add(fan);
+            }
 
-                foreach (var temp in hotspots.Concat(gpuTemps))
-                {
-                    _container.TempSensors.Add(temp);
-                }
+            foreach (var temp in hotspots.Concat(gpuTemps))
+            {
+                _container.TempSensors.Add(temp);
             }
         }
 
         public void Update()
         {
-            lock (_lock)
-            {
-                if (!_initialized) return;
+            if (!_initialized) return;
 
-                foreach (var provider in _metricsProviders)
-                    provider.UpdateMetrics();
-            }
+            foreach (var provider in _metricsProviders)
+                provider.UpdateMetrics();
         }
 
         private void Log(string message)
@@ -122,9 +110,11 @@ namespace FanControl.ADLX
         {
             _tracking?.Dispose();
             _fans?.Values.ToList().ForEach(x => x.Dispose());
+            _fans.Clear();
             _perf?.Dispose();
             _tuning?.Dispose();
             _gpus?.ToList().ForEach(x => x.Dispose());
+            _gpus = null;
             _system?.Dispose();
             _wrapper?.Dispose();
         }
