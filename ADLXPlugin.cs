@@ -28,21 +28,10 @@ namespace FanControl.ADLX
 
         public string Name => "ADLX";
 
-        public void Close()
-        {
-            if (!_initialized)
-                return;
-
-            DisposeAll();
-
-            _initialized = false;
-        }
-
         public void Initialize()
         {
             try
             {
-
                 _wrapper = new ADLXWrapper.ADLXWrapper();
                 _system = _wrapper.GetSystemServices();
                 _gpus = _system.GetGPUs();
@@ -53,7 +42,7 @@ namespace FanControl.ADLX
                 _fans = _gpus.Where(_tuning.IsManualFanTuningSupported)
                     .ToDictionary(x => x.UniqueId, x => _tuning.GetManualFanTuning(x));
 
-                _tracking = _perf.StartTracking(1000, 50);
+                //_tracking = _perf.StartTracking(1000);
                 _metricsProviders = _gpus.Select(x => new GPUMetricsProvider(_perf, x)).ToArray();
                 _initialized = true;
             }
@@ -99,6 +88,16 @@ namespace FanControl.ADLX
 
             foreach (var provider in _metricsProviders)
                 provider.UpdateMetrics();
+        }
+
+        public void Close()
+        {
+            if (!_initialized)
+                return;
+
+            DisposeAll();
+
+            _initialized = false;
         }
 
         private void Log(string message)
