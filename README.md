@@ -6,6 +6,10 @@ Plugin for [FanControl](https://github.com/Rem0o/FanControl.Releases) (V113 and 
 <br/><br/>
 https://gpuopen.com/adlx/
 
+## [OBSOLETE]
+
+As of [V195](https://github.com/Rem0o/FanControl.Releases/releases/tag/V195), FanControl has integrated the plugin in the main application.
+
 ## ADLX Bindings
 
 I did my best to make functional bindings in this fork following the other examples/bindings : https://github.com/Rem0o/ADLX<br/>
