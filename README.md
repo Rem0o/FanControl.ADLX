@@ -6,7 +6,7 @@ Plugin for [FanControl](https://github.com/Rem0o/FanControl.Releases) (V113 and 
 <br/><br/>
 https://gpuopen.com/adlx/
 
-## [OBSOLETE]
+## [OBSOLETE/DEPRECATED]
 
 As of [V195](https://github.com/Rem0o/FanControl.Releases/releases/tag/V195), FanControl has integrated the plugin in the main application.
 
