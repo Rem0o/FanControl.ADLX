@@ -1,4 +1,4 @@
-# FanControl.ADLX [![Build status](https://ci.appveyor.com/api/projects/status/di3028g55s139rwt?svg=true)](https://ci.appveyor.com/project/Rem0o/fancontrol-adlx)
+# FanControl.ADLX [DEPRECATED] [![Build status](https://ci.appveyor.com/api/projects/status/di3028g55s139rwt?svg=true)](https://ci.appveyor.com/project/Rem0o/fancontrol-adlx)
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat&logo=paypal)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=N4JPSTUQHRJM8&currency_code=USD&source=url&item_name=Fan+Control)
 
